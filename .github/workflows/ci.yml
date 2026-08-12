@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.9.0
+          run_install: false
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.16.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Run M2.2 native asset pipeline gate
+        run: |
+          pnpm asset -- doctor --input assets-source --json
+          pnpm asset -- validate --input assets-source --json
+          pnpm asset -- generate --input assets-source --output assets-generated --json
+
+      - name: Install Playwright Chromium and Linux dependencies
+        if: runner.os == 'Linux'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Install Playwright Chromium
+        if: runner.os == 'Windows'
+        run: pnpm exec playwright install chromium
+
+      - name: Run M3 browser renderer conformance
+        run: pnpm test:render-browser
+
+      - name: Run neutral Studio shell smoke test
+        run: pnpm test:e2e

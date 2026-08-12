@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "paths": {
+      "@editorial-doll/catalog": ["./packages/catalog/src/index.ts"],
+      "@editorial-doll/design-system": ["./packages/design-system/src/index.ts"],
+      "@editorial-doll/domain": ["./packages/domain/src/index.ts"],
+      "@editorial-doll/persistence": ["./packages/persistence/src/index.ts"],
+      "@editorial-doll/render-engine": ["./packages/render-engine/src/index.ts"],
+      "@editorial-doll/render-engine/browser": ["./packages/render-engine/src/browser.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "packages/**/*.ts",
+    "tools/**/*.ts",
+    "playwright.config.ts",
+    "playwright.render.config.ts",
+    "vitest.config.ts"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "editorial-doll",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Public engineering preview for a deterministic editorial styling engine.",
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=24.14.0 <25",
+    "pnpm": ">=11.9.0 <12"
+  },
+  "scripts": {
+    "asset": "pnpm --silent --filter @editorial-doll/asset-pipeline run asset",
+    "build": "pnpm -r --if-present run build",
+    "dev": "pnpm --filter @editorial-doll/studio dev",
+    "lint": "eslint . --max-warnings=0 && pnpm verify:boundaries && node scripts/verify-domain-purity.mjs && node scripts/verify-render-engine-purity.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:render-browser": "playwright test --config playwright.render.config.ts",
+    "test:unit": "vitest run",
+    "typecheck": "tsc -p tsconfig.typecheck.json",
+    "verify:boundaries": "node scripts/verify-workspace-boundaries.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.62.1",
+    "@types/node": "26.1.2",
+    "eslint": "10.8.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.3",
+    "globals": "17.8.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.65.0",
+    "vitest": "4.1.10"
+  }
+}

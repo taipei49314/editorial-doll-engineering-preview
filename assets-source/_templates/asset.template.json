@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "asset": {
+    "id": "top-example-001",
+    "version": "1.0.0",
+    "slot": "top",
+    "displayName": "Example Top",
+    "frame": {
+      "width": 2048,
+      "height": 3072,
+      "origin": "top-left"
+    },
+    "tags": [
+      "example"
+    ],
+    "parts": [
+      {
+        "id": "top-example-001-main",
+        "role": "top",
+        "sourcePath": "top.png"
+      }
+    ],
+    "compatibility": {
+      "compatibleMuses": [
+        {
+          "id": "muse-editorial-001",
+          "version": "1.0.0"
+        }
+      ],
+      "requiresActiveTags": [],
+      "excludesActiveTags": [],
+      "incompatibleAssets": []
+    }
+  },
+  "technical": {
+    "edgeGuardExceptions": []
+  }
+}
